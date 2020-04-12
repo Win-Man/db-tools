@@ -59,6 +59,8 @@ sysbench.cmdline.options = {
    {"Use AUTO_INCREMENT column as Primary Key (for MySQL), " ..
        "or its alternatives in other DBMS. When disabled, use " ..
        "client-generated IDs", true},
+   auto_random = 
+   {"For TiDB auto_random",false},
    skip_trx =
       {"Don't start explicit transactions and execute all queries " ..
           "in the AUTOCOMMIT mode", false},
@@ -166,6 +168,8 @@ function create_table(drv, con, table_num)
    then
       if sysbench.opt.auto_inc then
          id_def = "INTEGER NOT NULL AUTO_INCREMENT"
+      elseif sysbench.opt.auto_random then
+         id_def = "INTEGER NOT NULL AUTO_RANDOM"
       else
          id_def = "INTEGER NOT NULL"
       end
